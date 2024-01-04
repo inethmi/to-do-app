@@ -1,4 +1,4 @@
-const inputBox = document.getElementById("input-box");
+const inputBox = document.querySelector("#input-box");
 const listContainer = document.getElementById("list-container");
 
 function addTask(){
@@ -40,3 +40,33 @@ function showTask(){
 }
 
 showTask();
+
+voice_Search.addEventListener('click' , function(){
+  var speech = true;
+  window.SpeechRecognition = window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+
+  recognition.addEventListener('result' , e=>{
+    const transcript = Array.from(e.results)
+    .map(result =>result[0])
+    .map(result => result.transcript)
+
+    inputBox.value = transcript;
+
+  })
+
+  if(speech == true){
+    recognition.start();
+  }
+
+});
+
+
+document.getElementById('input-box').addEventListener('keypress', function (e) {
+  
+  if (e.key === 'Enter') {
+    addTask();
+  }
+});
+
